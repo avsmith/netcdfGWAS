@@ -1,5 +1,7 @@
 # Script to create netcdf files from mach imputations
 
+# See accompanying file on how to use the files created.
+
 # Example data created via mach/minimac2
 # Note: mach and minimac installed for Mac OS X via: https://github.com/avsmith/homebrew-genetics 
 # Example data source: http://www.sph.umich.edu/csg/cfuchsb/minimac2_example.tgz
