@@ -4,12 +4,12 @@
 
 # Example data created via mach/minimac2
 # Note: mach and minimac installed for Mac OS X via: https://github.com/avsmith/homebrew-genetics 
-# Example data source: http://www.sph.umich.edu/csg/cfuchsb/minimac2_example.tgz
+# Example data source: http://www.sph.umich.edu/csg/cfuchsb/minimac_example.tgz
 # Note: example data includes linux binaries for mach, minimac, and minimac2
 # mach command to phase:
-# > mach1 --datfile minimac2_example/sample.dat --pedfile minimac2_example/sample.ped --phase --prefix minimac2_example/sample.pp
+# > mach1 --datfile example_gts/sample.dat --pedfile example_gts/sample.ped --phase --prefix example_gts/sample.pp
 # minimac2 command to impute:
-# > minimac2 --refHaps minimac2_example/hapmap.hap --refSnps minimac2_example/hapmap.snps --haps minimac2_example/sample.pp.gz --snps minimac2_example/sample.snps --prefix minimac2_example/chr99.imp
+# > minimac2 --refHaps example_gts/hapmap.hap --refSnps example_gts/hapmap.snps --haps example_gts/sample.pp.gz --snps example_gts/sample.snps --prefix example_gts/minimac2.chr99.imp
 
 # NOTE
 # The example below requires a position for each SNP. While not required for analysis, convinient
@@ -17,10 +17,10 @@
 # The fake postions for this example was create in R as follows:
 # > library(dplyr)
 # > library(tidyr)
-# > chr99info <- read.table("minimac2_example/chr99.imp.info",header=TRUE)
+# > chr99info <- read.table("example_gts/minimac2.chr99.imp.info",header=TRUE)
 # > mlinfoNames <- names(chr99info)
 # > chr99info <- chr99info %>% mutate(POS=extract_numeric(SNP)) %>% select(one_of(c("SNP","POS",mlinfoNames[2:length(mlinfoNames)])))
-# > write.table(chr99info, "minimac2_example/chr99.imp.info.pos",quote=FALSE,row.names=FALSE)
+# > write.table(chr99info, "example_gts/minimac2.chr99.imp.info.pos",quote=FALSE,row.names=FALSE)
 
 options(stringsAsFactors = FALSE)
 
@@ -29,7 +29,7 @@ options(stringsAsFactors = FALSE)
 # The IDs in the netcdf files contains characters.
 # netcdf does not work well with characters
 
-idfile<-"minimac2_example/sampleIDs.txt" 
+idfile<-"example_gts/sampleIDs.txt" 
 ids<-read.table(idfile, header=TRUE)
 
 # NOTE:
@@ -51,11 +51,11 @@ read.dosage<-function(chromosome){
   require(ncdf)
   
   # Read in the dosages made as the example above
-  imputed<-sub("@",as.character(chromosome),"minimac2_example/chr@.imp.dose")
+  imputed<-sub("@",as.character(chromosome),"example_gts/minimac2.chr@.imp.dose")
   
   # NOTE
   # This is the info file from minimac, with a column for SNP position added
-  snpfile<-sub("@",as.character(chromosome), "minimac2_example/chr@.imp.info.pos")
+  snpfile<-sub("@",as.character(chromosome), "example_gts/minimac2.chr@.imp.info.pos")
   snps<-read.table(snpfile,header=TRUE)
   
   NSNPS<-nrow(snps)
